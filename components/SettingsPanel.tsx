@@ -34,6 +34,7 @@ import { AgentsConfig } from "./AgentsConfig";
 import { PluginsConfig } from "./PluginsConfig";
 import { McpConfig } from "./McpConfig";
 import { ConfigButton, ConfigSwitch } from "./SettingsUi";
+import { FontSettings } from "./FontSettings";
 
 interface Props {
   cwd: string | null;
@@ -197,6 +198,7 @@ function GeneralSettings({ sessionId, onSessionReloaded, quoteSelectionEnabled, 
             );
           })}
         </div>
+        <FontSettings />
       </section>
 
       <section className="settings-general-section">

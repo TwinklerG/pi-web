@@ -1604,6 +1604,73 @@
   overflow-wrap: anywhere;
 }
 
+.settings-font-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  margin-top: 16px;
+}
+
+.settings-font-options .settings-general-description {
+  margin: 0;
+}
+
+.settings-font-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.settings-font-input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.settings-font-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.settings-font-weight-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.settings-font-weight-select {
+  width: auto;
+  max-width: 100%;
+}
+
+.settings-font-preview {
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-weight: var(--font-ui-weight);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.settings-font-preview.is-mono {
+  font-family: var(--font-mono);
+  font-weight: var(--font-mono-weight);
+}
+
 .settings-chat-options {
   display: flex;
   flex-direction: column;
