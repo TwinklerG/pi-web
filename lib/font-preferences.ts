@@ -1,4 +1,9 @@
 export type FontKind = "ui" | "mono";
+/**
+ * Base weights stop at Semi Bold (600): headings and labels use 600, bold text,
+ * syntax-highlighted bold and the terminal's bold use 700. A heavier base would
+ * make ordinary text heavier than the text meant to stand out.
+ */
 export const FONT_WEIGHT_OPTIONS = [
   { value: 100, label: "settings.fontWeightThin" },
   { value: 200, label: "settings.fontWeightExtraLight" },
@@ -6,9 +11,6 @@ export const FONT_WEIGHT_OPTIONS = [
   { value: 400, label: "settings.fontWeightRegular" },
   { value: 500, label: "settings.fontWeightMedium" },
   { value: 600, label: "settings.fontWeightSemiBold" },
-  { value: 700, label: "settings.fontWeightBold" },
-  { value: 800, label: "settings.fontWeightExtraBold" },
-  { value: 900, label: "settings.fontWeightBlack" },
 ] as const;
 export type FontWeight = (typeof FONT_WEIGHT_OPTIONS)[number]["value"];
 export type FontPreferences = Record<FontKind, string> & Record<`${FontKind}Weight`, FontWeight>;

@@ -5,7 +5,7 @@ import { FitAddon } from "@xterm/addon-fit";
 import { Terminal } from "@xterm/xterm";
 import { useI18n } from "@/hooks/useI18n";
 import { subscribeFontPreferences } from "@/hooks/useFontPreferences";
-import { readFontWeight, type FontWeight } from "@/lib/font-preferences";
+import { readFontWeight } from "@/lib/font-preferences";
 import { createTerminalWriter, terminalRequest } from "@/lib/terminal-client";
 import type { TerminalEvent } from "@/lib/terminal-manager";
 import type { TerminalTab } from "./terminal-tab-state";
@@ -47,12 +47,10 @@ export function TerminalPanel({ tab, active, onRestart, onClosed, onCloseError }
 
     const readTerminalFont = () => {
       const style = getComputedStyle(container);
-      const fontWeight = readFontWeight(style.getPropertyValue("--font-mono-weight"));
-      const fontWeightBold: FontWeight = fontWeight > 700 ? fontWeight : 700;
       return {
         fontFamily: style.getPropertyValue("--font-mono").trim() || "monospace",
-        fontWeight,
-        fontWeightBold,
+        // Base weights stop at 600, so xterm's default bold (700) stays heavier.
+        fontWeight: readFontWeight(style.getPropertyValue("--font-mono-weight")),
       };
     };
     const terminal = new Terminal({
@@ -110,13 +108,9 @@ export function TerminalPanel({ tab, active, onRestart, onClosed, onCloseError }
       const font = readTerminalFont();
       terminal.options.fontFamily = font.fontFamily;
       terminal.options.fontWeight = font.fontWeight;
-      terminal.options.fontWeightBold = font.fontWeightBold;
       fitAndResize();
     };
     const unsubscribeFonts = subscribeFontPreferences(updateFont);
-    // The default web font may finish loading after xterm first measures its cells.
-    void document.fonts.ready.then(updateFont);
-    document.fonts.addEventListener("loadingdone", updateFont);
 
     const connect = () => {
       if (disposed || exited || !navigator.onLine) return;
@@ -191,7 +185,6 @@ export function TerminalPanel({ tab, active, onRestart, onClosed, onCloseError }
       void writer.stop();
       resizeObserver.disconnect();
       unsubscribeFonts();
-      document.fonts.removeEventListener("loadingdone", updateFont);
       onData.dispose();
       onResize.dispose();
       window.removeEventListener("pagehide", pageHide);
